@@ -80,5 +80,8 @@ class PygameGraph:
     def __draw_function(self, left_x: int = -15, right_x: int = 15) -> None:
         """Draws graph of given function"""
         for x in range(left_x * self.graph_scale, right_x * self.graph_scale):
-            graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
-            pygame.draw.circle(self.screen, Config.BLACK, self.WINDOW_CENTER + graph_dot_offset, 1)
+            try:
+                graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
+                pygame.draw.circle(self.screen, Config.BLACK, self.WINDOW_CENTER + graph_dot_offset, 1)
+            except ValueError:
+                print(f'Impossible to calculate value of function at point {x / self.graph_scale}')
