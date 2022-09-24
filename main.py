@@ -1,5 +1,4 @@
 import typing as t
-import math
 
 import pygame
 from pygame.math import Vector2
@@ -83,8 +82,3 @@ class PygameGraph:
         for x in range(left_x * self.graph_scale, right_x * self.graph_scale):
             graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
             pygame.draw.circle(self.screen, Config.BLACK, self.WINDOW_CENTER + graph_dot_offset, 1)
-
-
-if __name__ == '__main__':
-    app = PygameGraph(function=math.cos, scale=40)
-    app.run()
