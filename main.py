@@ -87,11 +87,14 @@ class PygameGraph:
                 (self.GRAPH_CENTER.x + Config.DIVIDING_STRIPES_WIDTH, strip_y_coordinate),
             )
 
-    def __draw_function(self, left_x: int = -15, right_x: int = 15) -> None:
+    def __draw_function(self) -> None:
         """Draws graph of given function"""
         previous_dot_position = None
 
-        for x in range(left_x * self.graph_scale, right_x * self.graph_scale):
+        half_width = ((self.WIDTH - 2 * Config.DIVIDING_STRIPES_OFFSET) // 2)
+        border = self.graph_scale * (half_width // self.graph_scale)
+
+        for x in range(-border, border):
             try:
                 graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
                 current_dot_position = self.GRAPH_CENTER + graph_dot_offset
