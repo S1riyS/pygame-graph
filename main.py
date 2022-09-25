@@ -14,7 +14,7 @@ class PygameGraph:
 
         self.WIDTH = Config.WINDOW_WIDTH
         self.HEIGHT = Config.WINDOW_HEIGHT
-        self.WINDOW_CENTER = Vector2(self.WIDTH // 2, self.HEIGHT // 2)
+        self.GRAPH_CENTER = Vector2(self.WIDTH // 2, self.HEIGHT // 2)
 
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.running = True
@@ -51,18 +51,18 @@ class PygameGraph:
         pygame.draw.line(
             self.screen,
             Config.BLACK,
-            (Config.DIVIDING_STRIPES_OFFSET, self.HEIGHT // 2),
-            (self.WIDTH - Config.DIVIDING_STRIPES_OFFSET, self.HEIGHT // 2)
+            (Config.DIVIDING_STRIPES_OFFSET, self.GRAPH_CENTER.y),
+            (self.WIDTH - Config.DIVIDING_STRIPES_OFFSET, self.GRAPH_CENTER.y)
         )
         pygame.draw.line(
             self.screen,
             Config.BLACK,
-            (self.WIDTH // 2, Config.DIVIDING_STRIPES_OFFSET),
-            (self.WIDTH // 2, self.HEIGHT - Config.DIVIDING_STRIPES_OFFSET)
+            (self.GRAPH_CENTER.x, Config.DIVIDING_STRIPES_OFFSET),
+            (self.GRAPH_CENTER.x, self.HEIGHT - Config.DIVIDING_STRIPES_OFFSET)
         )
 
         # Drawing dividing strips on X axis
-        for strip_x in range(-1, (self.WIDTH - 2 * Config.DIVIDING_STRIPES_OFFSET)):
+        for strip_x in range(-1, (self.WIDTH - 2 * Config.DIVIDING_STRIPES_OFFSET) // self.graph_scale):
             half_width = (self.WIDTH - 2 * Config.DIVIDING_STRIPES_OFFSET) // 2
             strip_x_offset = half_width - self.graph_scale * (half_width // self.graph_scale - 1)
             strip_x_coordinate = Config.DIVIDING_STRIPES_OFFSET + strip_x * self.graph_scale + strip_x_offset
@@ -70,12 +70,12 @@ class PygameGraph:
             pygame.draw.line(
                 self.screen,
                 Config.BLACK,
-                (strip_x_coordinate, self.HEIGHT // 2 - Config.DIVIDING_STRIPES_WIDTH),
-                (strip_x_coordinate, self.HEIGHT // 2 + Config.DIVIDING_STRIPES_WIDTH)
+                (strip_x_coordinate, self.GRAPH_CENTER.y - Config.DIVIDING_STRIPES_WIDTH),
+                (strip_x_coordinate, self.GRAPH_CENTER.y + Config.DIVIDING_STRIPES_WIDTH)
             )
 
         # Drawing dividing strips on Y axis
-        for strip_y in range(-1, (self.HEIGHT - 2 * Config.DIVIDING_STRIPES_OFFSET)):
+        for strip_y in range(-1, (self.HEIGHT - 2 * Config.DIVIDING_STRIPES_OFFSET) // self.graph_scale):
             half_height = (self.HEIGHT - 2 * Config.DIVIDING_STRIPES_OFFSET) // 2
             strip_y_offset = half_height - self.graph_scale * (half_height // self.graph_scale - 1)
             strip_y_coordinate = Config.DIVIDING_STRIPES_OFFSET + strip_y * self.graph_scale + strip_y_offset
@@ -83,15 +83,22 @@ class PygameGraph:
             pygame.draw.line(
                 self.screen,
                 Config.BLACK,
-                (self.WIDTH // 2 - Config.DIVIDING_STRIPES_WIDTH, strip_y_coordinate),
-                (self.WIDTH // 2 + Config.DIVIDING_STRIPES_WIDTH, strip_y_coordinate),
+                (self.GRAPH_CENTER.x - Config.DIVIDING_STRIPES_WIDTH, strip_y_coordinate),
+                (self.GRAPH_CENTER.x + Config.DIVIDING_STRIPES_WIDTH, strip_y_coordinate),
             )
 
     def __draw_function(self, left_x: int = -15, right_x: int = 15) -> None:
         """Draws graph of given function"""
+        previous_dot_position = None
+
         for x in range(left_x * self.graph_scale, right_x * self.graph_scale):
             try:
                 graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
-                pygame.draw.circle(self.screen, Config.BLACK, self.WINDOW_CENTER + graph_dot_offset, 1)
+                current_dot_position = self.GRAPH_CENTER + graph_dot_offset
+
+                if previous_dot_position and abs(previous_dot_position.y - current_dot_position.y) < self.HEIGHT:
+                    pygame.draw.line(self.screen, Config.BLACK, previous_dot_position, current_dot_position, 1)
+
+                previous_dot_position = current_dot_position
             except ValueError:
                 pass
