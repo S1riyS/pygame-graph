@@ -1,0 +1,10 @@
+class Config:
+    WINDOW_WIDTH = 1280
+    WINDOW_HEIGHT = 720
+
+    WHITE = (255, 255, 255)
+    BLACK = (15, 15, 15)
+    RED = (255, 0, 0)
+
+    DIVIDING_STRIPES_OFFSET = 40
+    DIVIDING_STRIPES_WIDTH = 4
