@@ -8,3 +8,7 @@ class Config:
 
     DIVIDING_STRIPES_OFFSET = 40
     DIVIDING_STRIPES_WIDTH = 4
+
+    MIN_ZOOM = 20
+    MAX_ZOOM = 400
+    ZOOM_VALUE = 5

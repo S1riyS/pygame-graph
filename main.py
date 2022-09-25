@@ -22,19 +22,29 @@ class PygameGraph:
         pygame.display.set_caption('Pygame graph')
 
     def run(self) -> None:
-        self.screen.fill(Config.WHITE)
-
         while self.running:
+            self.screen.fill(Config.WHITE)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 4:
+                        self.graph_scale += Config.ZOOM_VALUE
+                    elif event.button == 5:
+                        self.graph_scale -= Config.ZOOM_VALUE
+
+            self.__normalize_graph_scale()
             self.__draw_coordinate_plane()
             self.__draw_function()
 
             pygame.display.flip()
 
         pygame.quit()
+
+    def __normalize_graph_scale(self) -> None:
+        self.graph_scale = min(max(self.graph_scale, Config.MIN_ZOOM), Config.MAX_ZOOM)
 
     def __draw_coordinate_plane(self) -> None:
         # Drawing horizontal and vertical lines
@@ -84,4 +94,4 @@ class PygameGraph:
                 graph_dot_offset = Vector2(x, -self.function(x / self.graph_scale) * self.graph_scale)
                 pygame.draw.circle(self.screen, Config.BLACK, self.WINDOW_CENTER + graph_dot_offset, 1)
             except ValueError:
-                print(f'Impossible to calculate value of function at point {x / self.graph_scale}')
+                pass
