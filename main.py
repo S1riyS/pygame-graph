@@ -103,5 +103,5 @@ class PygameGraph:
                     pygame.draw.line(self.screen, Config.BLACK, previous_dot_position, current_dot_position, 1)
 
                 previous_dot_position = current_dot_position
-            except ValueError:
+            except (ValueError, ZeroDivisionError):
                 pass
