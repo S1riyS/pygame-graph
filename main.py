@@ -117,8 +117,8 @@ class PygameGraph:
             right_border = round(function.right_x * self.graph_scale)
         else:
             half_width = ((self.WIDTH - 2 * Config.DIVIDING_STRIPES_OFFSET) // 2)
-            left_border = self.graph_scale * (half_width // self.graph_scale)
-            right_border = -self.graph_scale * (half_width // self.graph_scale)
+            left_border = -self.graph_scale * (half_width // self.graph_scale)
+            right_border = self.graph_scale * (half_width // self.graph_scale)
 
         for x in range(left_border, right_border):
             try:
