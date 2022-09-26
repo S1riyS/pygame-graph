@@ -13,14 +13,10 @@ class Function(t.NamedTuple):
 
 
 class PygameGraph:
-    def __init__(
-            self,
-            functions: t.Iterable[Function],
-            scale: int,
-    ):
+    def __init__(self, functions: t.Iterable[Function], initial_scale: int):
         pygame.init()
         self.functions = functions
-        self.graph_scale = scale
+        self.graph_scale = initial_scale
 
         self.WIDTH = Config.WINDOW_WIDTH
         self.HEIGHT = Config.WINDOW_HEIGHT

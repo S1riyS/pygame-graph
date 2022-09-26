@@ -13,5 +13,5 @@ FUNCTIONS = (
 )
 
 if __name__ == '__main__':
-    app = PygameGraph(functions=FUNCTIONS, scale=40)
+    app = PygameGraph(functions=FUNCTIONS, initial_scale=40)
     app.run()
