@@ -1,6 +1,7 @@
 import math
 
-from main import PygameGraph, Function
+from app import Application
+from app.types import Function
 
 FUNCTIONS = (
     Function(function=lambda x: -x ** 2, left_x=-2, right_x=2),
@@ -13,5 +14,5 @@ FUNCTIONS = (
 )
 
 if __name__ == '__main__':
-    app = PygameGraph(functions=FUNCTIONS, initial_scale=40)
+    app = Application(functions=FUNCTIONS, initial_scale=40)
     app.run()

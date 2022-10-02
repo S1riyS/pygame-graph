@@ -6,8 +6,11 @@ class Config:
     BLACK = (15, 15, 15)
     RED = (255, 0, 0)
 
-    DIVIDING_STRIPES_OFFSET = 40
-    DIVIDING_STRIPES_WIDTH = 4
+    GRAPHS_PADDING = 40
+    DIVIDING_STRIPE_WIDTH = 4
+
+    ROWS = 2
+    COLUMNS = 3
 
     MIN_ZOOM = 20
     MAX_ZOOM = 400
